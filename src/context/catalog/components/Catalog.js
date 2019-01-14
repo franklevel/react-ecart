@@ -15,6 +15,7 @@ import {
   CardSubtitle,
   CardText
 } from "reactstrap";
+import { Link } from "react-router-dom";
 
 class Catalog extends React.Component {
   constructor(props) {
@@ -46,8 +47,6 @@ class Catalog extends React.Component {
   }
 
   render() {
-    console.log("Modal State: ", this.state.modal);
-    let modal = this.state.modal;
     const productList =
       this.props.catalog && this.props.catalog.length > 0
         ? this.props.catalog.map((item, i) => {
@@ -61,7 +60,9 @@ class Catalog extends React.Component {
                     alt="Card image cap"
                   />
                   <CardBody>
-                    <CardTitle>{item.name}</CardTitle>
+                    <CardTitle>
+                      <Link to={"/product/" + item.id}>{item.name}</Link>
+                    </CardTitle>
                     <CardSubtitle>
                       Precio: {this._displayPrice(item.price)}
                     </CardSubtitle>

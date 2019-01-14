@@ -3,9 +3,32 @@ import { connect } from "react-redux";
 import Actions from "./context/catalog/actions";
 import Catalog from "./context/catalog/components/Catalog";
 import Cart from "./context/cart/components/Cart";
-import { Container, Row, Col, Button } from "reactstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Breadcrumb,
+  BreadcrumbItem
+} from "reactstrap";
 import CATALOG from "./context/catalog/constants";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import ProductDetail from "./context/catalog/components/ProductDetail";
+
+const NavigationMenu = props => {
+  return (
+    <div>
+      <Breadcrumb>
+        <BreadcrumbItem>
+          <a href="/#">Home</a>
+        </BreadcrumbItem>
+        <BreadcrumbItem>
+          <a href="/#/product">Producto</a>
+        </BreadcrumbItem>
+      </Breadcrumb>
+    </div>
+  );
+};
 
 class App extends Component {
   constructor(props) {
@@ -38,22 +61,26 @@ class App extends Component {
 
   render() {
     return (
-      <Container className="App mt-5">
-        <header>
-          <Row>
-            <Col md={6}>
-              <Button color="success" onClick={this.createProduct}>
-                Crear producto
-              </Button>
-            </Col>
-            <Col md={6}>
-              <Cart />
-            </Col>
-          </Row>
-        </header>
-        <br />
-        <Catalog />
-      </Container>
+      <Router>
+        <Container className="App mt-5">
+          <header>
+            <Row>
+              <Col md={6}>
+                <Button color="success" onClick={this.createProduct}>
+                  Crear producto
+                </Button>
+              </Col>
+              <Col md={6}>
+                <Cart />
+              </Col>
+            </Row>
+          </header>
+          <br />
+          <NavigationMenu />
+          <Route path="/" exact component={Catalog} />
+          <Route path="/product/:id" component={ProductDetail} />
+        </Container>
+      </Router>
     );
   }
 }

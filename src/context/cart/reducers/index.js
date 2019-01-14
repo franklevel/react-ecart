@@ -12,11 +12,11 @@ export function cartReducer(state = initialState, { type, payload }) {
         return item.id === payload.id;
       });
 
-      const filteredCart = state.cart
+      /* const filteredCart = state.cart
         .filter(item => {
           return item.id !== payload.id;
         })
-        .concat({ ...payload, quantity: payload.quantity + 1 });
+        .concat({ ...payload, quantity: payload.quantity + 1 }); */
 
       return {
         ...state,

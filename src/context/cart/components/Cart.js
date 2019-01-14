@@ -41,7 +41,10 @@ class Cart extends React.Component {
     const total =
       o && o.length > 0
         ? Object.keys(o).reduce((total, obj) => {
-            return parseFloat(o[obj].price) + parseFloat(total);
+            return (
+              parseFloat(o[obj].price) * parseInt(o[obj].quantity) +
+              parseFloat(total)
+            );
           }, 0)
         : 0;
     console.log("Total: ", total);

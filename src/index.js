@@ -4,6 +4,9 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { createStore, compose, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import thunk from "redux-thunk";
 
 import logger from "redux-logger";
