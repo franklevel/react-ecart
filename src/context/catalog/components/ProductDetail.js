@@ -87,8 +87,8 @@ class ProductDetailView extends React.Component {
                 </CardText>
                 <Form>
                   <FormGroup>
-                    <Label>Cantidad</Label>
                     <Col sm={3}>
+                      <Label>Cantidad</Label>
                       <Input
                         type="number"
                         step={1}
@@ -105,6 +105,7 @@ class ProductDetailView extends React.Component {
                         color="success"
                         value={product ? product.id : 0}
                         onClick={e => this.handleAddToCart(e)}
+                        block
                       >
                         Agregar al carrito
                       </Button>

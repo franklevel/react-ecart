@@ -15,6 +15,12 @@ import CATALOG from "./context/catalog/constants";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import ProductDetail from "./context/catalog/components/ProductDetail";
 
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faCartPlus, faEye } from "@fortawesome/free-solid-svg-icons";
+
+library.add([faPlus, faCartPlus, faEye]);
+
 const NavigationMenu = props => {
   return (
     <div>
@@ -67,7 +73,7 @@ class App extends Component {
             <Row>
               <Col md={6}>
                 <Button color="success" onClick={this.createProduct}>
-                  Crear producto
+                  Crear producto <FontAwesomeIcon icon="plus" />
                 </Button>
               </Col>
               <Col md={6}>

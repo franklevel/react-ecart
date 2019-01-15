@@ -16,6 +16,11 @@ import {
   CardText
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faCartPlus, faEye } from "@fortawesome/free-solid-svg-icons";
+
+library.add([faPlus, faCartPlus, faEye]);
 
 class Catalog extends React.Component {
   constructor(props) {
@@ -70,14 +75,16 @@ class Catalog extends React.Component {
                       Some quick example text to build on the card title and
                       make up the bulk of the card's content.
                     </CardText>
-
                     <Button
                       color="primary"
                       outline
                       onClick={this.handleAddToCart}
                       value={item.id}
                     >
-                      Agregar al carrito
+                      Agregar al carrito <FontAwesomeIcon icon="cart-plus" />
+                    </Button>{" "}
+                    <Button color="secondary" outline>
+                      <FontAwesomeIcon icon="eye" />
                     </Button>
                   </CardBody>
                 </Card>
