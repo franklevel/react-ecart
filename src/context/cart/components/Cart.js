@@ -121,7 +121,9 @@ class Cart extends React.Component {
               </b>
             </ListGroupItem>
             <ListGroupItem>
-              <Button color="primary">Confirmar pedido</Button>
+              <Button color="primary" block>
+                Confirmar pedido
+              </Button>
             </ListGroupItem>
           </ListGroup>
         </Popover>

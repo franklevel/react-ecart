@@ -68,7 +68,11 @@ class ProductDetailView extends React.Component {
               <CardImg
                 top
                 width="100%"
-                src="https://c.static-nike.com/a/images/f_auto,b_rgb:f5f5f5,w_880/ylkzt9iafifaip0yhz1w/dry-swoosh-mens-training-t-shirt-AKTd19nk.jpg"
+                src={
+                  product.image
+                    ? product.image
+                    : "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180"
+                }
               />
             </Card>
           </Col>
@@ -79,11 +83,14 @@ class ProductDetailView extends React.Component {
                   <h3>{product ? product.name : null}</h3>
                 </CardTitle>
                 <CardSubtitle className="text-muted">
-                  Subtítulo del producto
+                  {product.categories
+                    ? product.categories.map((c, i) => {
+                        return <span key={i}>{c.name}</span>;
+                      })
+                    : null}
                 </CardSubtitle>
                 <CardText>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                  {product.description ? product.description : null}
                 </CardText>
                 <Form>
                   <FormGroup>

@@ -17,6 +17,12 @@ export function CatalogActions(action, payload) {
         type: action,
         payload: payload
       };
+    case CATALOG.ADD_CATEGORY:
+      return {
+        type: action,
+        payload: payload
+      };
+
     case CATALOG.ATC_MODAL_OPEN:
       return {
         type: action,

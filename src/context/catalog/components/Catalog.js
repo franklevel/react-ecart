@@ -48,7 +48,6 @@ class Catalog extends React.Component {
   handleOnChange(e) {
     const value = e.target.value;
     const name = e.target.name;
-    console.log("Name: Value:", name, value);
   }
 
   render() {
@@ -60,9 +59,13 @@ class Catalog extends React.Component {
                 <Card>
                   <CardImg
                     top
-                    width="100%"
-                    src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180"
-                    alt="Card image cap"
+                    src={
+                      item.image
+                        ? item.image
+                        : "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180"
+                    }
+                    alt={item.name}
+                    height="100%"
                   />
                   <CardBody>
                     <CardTitle>
@@ -72,8 +75,7 @@ class Catalog extends React.Component {
                       Precio: {this._displayPrice(item.price)}
                     </CardSubtitle>
                     <CardText>
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
+                      {item.description ? item.description : null}
                     </CardText>
                     <Button
                       color="primary"

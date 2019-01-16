@@ -5,11 +5,13 @@ import Catalog from "./context/catalog/components/Catalog";
 import Cart from "./context/cart/components/Cart";
 import {
   Container,
-  Row,
-  Col,
-  Button,
   Breadcrumb,
-  BreadcrumbItem
+  BreadcrumbItem,
+  Navbar,
+  NavbarBrand,
+  NavbarToggler,
+  NavItem,
+  Nav
 } from "reactstrap";
 import CATALOG from "./context/catalog/constants";
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -18,6 +20,9 @@ import ProductDetail from "./context/catalog/components/ProductDetail";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faCartPlus, faEye } from "@fortawesome/free-solid-svg-icons";
+import logo from "./logo.svg";
+import CreateProduct from "./context/catalog/components/CreateProduct";
+import CreateCategory from "./context/catalog/components/CreateCategory";
 
 library.add([faPlus, faCartPlus, faEye]);
 
@@ -68,23 +73,25 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Container className="App mt-5">
-          <header>
-            <Row>
-              <Col md={6}>
-                <Button color="success" onClick={this.createProduct}>
-                  Crear producto <FontAwesomeIcon icon="plus" />
-                </Button>
-              </Col>
-              <Col md={6}>
+        <Container className="App">
+          <Navbar light expand="md">
+            <NavbarBrand href="/">
+              <img src={logo} />
+            </NavbarBrand>
+            <NavbarToggler onClick={this.toggle} />
+
+            <Nav className="ml-auto" navbar>
+              <NavItem>
                 <Cart />
-              </Col>
-            </Row>
-          </header>
+              </NavItem>
+            </Nav>
+          </Navbar>
           <br />
           <NavigationMenu />
           <Route path="/" exact component={Catalog} />
           <Route path="/product/:id" component={ProductDetail} />
+          <Route path="/catalog/product/create" component={CreateProduct} />
+          <Route path="/catalog/category/create" component={CreateCategory} />
         </Container>
       </Router>
     );
