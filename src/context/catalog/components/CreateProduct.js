@@ -17,8 +17,21 @@ import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 class CreateProduct extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleLoadLocalFile = this.handleLoadLocalFile.bind(this);
+  }
+
+  handleLoadLocalFile = event => {
+    event.preventDefault();
+    const { files } = event.target;
+    const localImageUrl = window.URL.createObjectURL(files[0]);
+
+    this.props.onFileLoaded(localImageUrl);
+  };
+
   render() {
-    const { categories } = this.props;
+    const { categories, colors } = this.props;
     return (
       <Card>
         <CardBody>
@@ -38,12 +51,16 @@ class CreateProduct extends React.Component {
                   name: values.name,
                   description: values.description,
                   categories: values.categories,
-                  image: values.image,
+                  image:
+                    this.props.currentImage !== ""
+                      ? this.props.currentImage
+                      : null,
                   price: values.price,
                   stock: values.stock
                 })
               ) {
-                alert("Se ha creado el propducto");
+                this.props.onFileSaved(null);
+                this.props.history.push("/catalog/product/list");
               }
             }}
             validationSchema={Yup.object().shape({
@@ -115,13 +132,29 @@ class CreateProduct extends React.Component {
                     <ErrorMessage name="categories" component="div" />
                   </FormGroup>
                   <FormGroup>
+                    <Label>Color</Label>
+                    <Input type="select" name="colors">
+                      [<option value="0">Seleccione:</option>
+                      {colors && colors.length > 0
+                        ? colors.map((c, k) => {
+                            return (
+                              <option key={k} value={c.id}>
+                                {c.name}
+                              </option>
+                            );
+                          })
+                        : null}
+                      ];
+                    </Input>
+                    <ErrorMessage name="colors" component="div" />
+                  </FormGroup>
+                  <FormGroup>
                     <Label>Imagen del producto (URL)</Label>
                     <Input
-                      type="text"
+                      type="file"
                       name="image"
                       value={values.image}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                      onChange={e => this.handleLoadLocalFile(e)}
                       className={
                         errors.image && touched.image
                           ? "text-input error"
@@ -173,14 +206,20 @@ const mapStateToProps = state => {
   return {
     cart: state.cartReducer.cart,
     catalog: state.catalogReducer.catalog,
-    categories: state.catalogReducer.categories
+    categories: state.catalogReducer.categories,
+    colors: state.catalogReducer.colors,
+    currentImage: state.catalogReducer.currentImage
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     createProduct: payload =>
-      dispatch(CatalogActions(CATALOG.ADD_PRODUCT, payload))
+      dispatch(CatalogActions(CATALOG.ADD_PRODUCT, payload)),
+    onFileLoaded: payload =>
+      dispatch(CatalogActions(CATALOG.ON_FILE_LOADED, payload)),
+    onFileSaved: payload =>
+      dispatch(CatalogActions(CATALOG.ON_FILE_SAVED, payload))
   };
 };
 

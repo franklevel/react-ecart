@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faCartPlus, faEye } from "@fortawesome/free-solid-svg-icons";
+import { _displayPrice } from "../../../lib/helpers";
 
 library.add([faPlus, faCartPlus, faEye]);
 
@@ -26,15 +27,11 @@ class Catalog extends React.Component {
   constructor(props) {
     super(props);
     this.handleAddToCart = this.handleAddToCart.bind(this);
-    this.handleOnChange = this.handleOnChange.bind(this);
+
     this.state = {
       modal: false
     };
   }
-
-  _displayPrice = price => {
-    return Number.parseFloat(price).toFixed(2) + "$";
-  };
 
   handleAddToCart(e) {
     const id = parseInt(e.target.value);
@@ -43,11 +40,6 @@ class Catalog extends React.Component {
     });
 
     this.props.addToCart({ ...product, quantity: 1 });
-  }
-
-  handleOnChange(e) {
-    const value = e.target.value;
-    const name = e.target.name;
   }
 
   render() {
@@ -72,7 +64,7 @@ class Catalog extends React.Component {
                       <Link to={"/product/" + item.id}>{item.name}</Link>
                     </CardTitle>
                     <CardSubtitle>
-                      Precio: {this._displayPrice(item.price)}
+                      Precio: {_displayPrice(item.price)}
                     </CardSubtitle>
                     <CardText>
                       {item.description ? item.description : null}

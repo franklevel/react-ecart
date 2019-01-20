@@ -22,7 +22,36 @@ export function CatalogActions(action, payload) {
         type: action,
         payload: payload
       };
-
+    case CATALOG.ON_FILE_LOADED:
+      return {
+        type: action,
+        payload: payload
+      };
+    case CATALOG.ADD_COLOR:
+      return {
+        type: action,
+        payload: payload
+      };
+    case CATALOG.EDIT_COLOR:
+      return {
+        type: action,
+        payload: payload
+      };
+    case CATALOG.REMOVE_COLOR:
+      return {
+        type: action,
+        payload: payload
+      };
+    case CATALOG.ON_FILE_SAVED:
+      return {
+        type: action,
+        payload: payload
+      };
+    case CATALOG.ON_FILE_CLEAR:
+      return {
+        type: action,
+        payload: payload
+      };
     case CATALOG.ATC_MODAL_OPEN:
       return {
         type: action,

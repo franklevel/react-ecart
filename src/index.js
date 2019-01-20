@@ -6,7 +6,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./lib/configureStore";
-//import store from "./lib/store";
 
 ReactDOM.render(
   <Provider store={store}>

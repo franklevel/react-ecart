@@ -8,12 +8,7 @@ import CATALOG from "../constants";
 
 class CreateCategory extends React.Component {
   render() {
-    const rootCategories = [
-      { id: 1, name: "Categoria uno" },
-      { id: 2, name: "Categoria dos" },
-      { id: 3, name: "Categoria tres" },
-      { id: 4, name: "Categoria cuatro" }
-    ];
+    const { categories } = this.props;
     return (
       <Card>
         <CardBody>
@@ -41,14 +36,10 @@ class CreateCategory extends React.Component {
             {props => {
               const {
                 values,
-                touched,
-                errors,
-                dirty,
                 isSubmitting,
                 handleChange,
                 handleBlur,
-                handleSubmit,
-                handleReset
+                handleSubmit
               } = props;
               return (
                 <form onSubmit={handleSubmit}>
@@ -67,8 +58,8 @@ class CreateCategory extends React.Component {
                     <Label>Categoría superior</Label>
                     <Input type="select" name="root">
                       [<option value="0">Seleccione:</option>
-                      {rootCategories && rootCategories.length > 0
-                        ? rootCategories.map((c, k) => {
+                      {categories && categories.length > 0
+                        ? categories.map((c, k) => {
                             return (
                               <option key={k} value={c.id}>
                                 {c.name}
@@ -100,7 +91,8 @@ class CreateCategory extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    catalog: state.catalogReducer.catalog
+    catalog: state.catalogReducer.catalog,
+    categories: state.catalogReducer.categories
   };
 };
 

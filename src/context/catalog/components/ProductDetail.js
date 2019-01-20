@@ -123,9 +123,6 @@ class ProductDetailView extends React.Component {
             </Card>
           </Col>
         </Row>
-        <Row>
-          <Col sm={12}>Descripcion total</Col>
-        </Row>
       </div>
     );
   }

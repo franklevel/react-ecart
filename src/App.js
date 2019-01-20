@@ -17,14 +17,15 @@ import CATALOG from "./context/catalog/constants";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import ProductDetail from "./context/catalog/components/ProductDetail";
 
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faCartPlus, faEye } from "@fortawesome/free-solid-svg-icons";
 import logo from "./logo.svg";
 import CreateProduct from "./context/catalog/components/CreateProduct";
 import CreateCategory from "./context/catalog/components/CreateCategory";
-
-library.add([faPlus, faCartPlus, faEye]);
+import CartSummary from "./context/cart/components/CartSummary";
+import CatalogList from "./context/catalog/components/CatalogList";
+import routes from "./lib/routes";
+import CreateColor from "./context/catalog/components/CreateColor";
+import EditColor from "./context/catalog/components/EditColor";
+import ColorList from "./context/catalog/components/ColorList";
 
 const NavigationMenu = props => {
   return (
@@ -72,27 +73,36 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
-        <Container className="App">
-          <Navbar light expand="md">
-            <NavbarBrand href="/">
-              <img src={logo} />
-            </NavbarBrand>
-            <NavbarToggler onClick={this.toggle} />
-
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <Cart />
-              </NavItem>
-            </Nav>
+      <Router routes={routes}>
+        <div>
+          <Navbar className="navbar-dark bg-dark" expand="md">
+            <Container>
+              <NavbarBrand href="/">
+                <img src={logo} />
+              </NavbarBrand>
+              <NavbarToggler onClick={this.toggle} />
+              <Nav className="ml-auto" navbar>
+                <NavItem>
+                  <Cart />
+                </NavItem>
+              </Nav>
+            </Container>
           </Navbar>
-          <br />
-          <NavigationMenu />
-          <Route path="/" exact component={Catalog} />
-          <Route path="/product/:id" component={ProductDetail} />
-          <Route path="/catalog/product/create" component={CreateProduct} />
-          <Route path="/catalog/category/create" component={CreateCategory} />
-        </Container>
+          <Container className="mt-3">
+            <NavigationMenu />
+          </Container>
+          <Container className="App">
+            <Route path="/" exact component={Catalog} />
+            <Route path="/product/:id" component={ProductDetail} />
+            <Route path="/catalog/product/create" component={CreateProduct} />
+            <Route path="/catalog/category/create" component={CreateCategory} />
+            <Route path="/catalog/product/list" component={CatalogList} />
+            <Route path="/catalog/color/create" component={CreateColor} />
+            <Route path="/catalog/color/list" component={ColorList} />
+            <Route path="/catalog/color/edit/:id" component={EditColor} />
+            <Route path="/cart/summary" component={CartSummary} />
+          </Container>
+        </div>
       </Router>
     );
   }

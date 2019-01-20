@@ -11,7 +11,7 @@ import { _displayPrice } from "../../../lib/helpers";
 import CartActions from "../actions";
 import CART from "../constants";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   faPlus,
   faCartPlus,
@@ -19,6 +19,7 @@ import {
   faTrashAlt
 } from "@fortawesome/free-solid-svg-icons";
 import APP from "../../../lib/constants";
+import { Link } from "react-router-dom";
 
 library.add([faPlus, faCartPlus, faEye, faTrashAlt]);
 
@@ -60,6 +61,8 @@ class Cart extends React.Component {
         : 0;
     const taxes = subtotal * APP.TAXES.IVA;
     const total = subtotal + taxes;
+    const toShow = this.props.cart.slice(0, APP.MAX_ITEMS_DISPLAY);
+    const extraItems = this.props.cart.length - APP.MAX_ITEMS_DISPLAY;
 
     return (
       <div align="right">
@@ -75,8 +78,8 @@ class Cart extends React.Component {
         >
           <PopoverHeader>Carrito de Compras</PopoverHeader>
           <ListGroup className="list-group-flush">
-            {this.props.cart && this.props.cart.length > 0
-              ? this.props.cart.map((item, index) => (
+            {toShow && toShow.length > 0
+              ? toShow.map((item, index) => (
                   <ListGroupItem key={index}>
                     {item.name}{" "}
                     <span className="text-muted">
@@ -99,7 +102,14 @@ class Cart extends React.Component {
                   </ListGroupItem>
                 ))
               : null}
-
+            {this.props.cart &&
+            this.props.cart.length > APP.MAX_ITEMS_DISPLAY ? (
+              <ListGroupItem>
+                <small className="text-muted">
+                  ... y otros <b>{extraItems}</b> artículos más
+                </small>
+              </ListGroupItem>
+            ) : null}
             <ListGroupItem>
               Sub-Total:
               <b className="float-right">
@@ -121,9 +131,9 @@ class Cart extends React.Component {
               </b>
             </ListGroupItem>
             <ListGroupItem>
-              <Button color="primary" block>
+              <Link to="/cart/summary" className="btn btn-success btn-block">
                 Confirmar pedido
-              </Button>
+              </Link>
             </ListGroupItem>
           </ListGroup>
         </Popover>

@@ -12,24 +12,10 @@ export function cartReducer(state = initialState, { type, payload }) {
         return item.id === payload.id;
       });
 
-      /* const filteredCart = state.cart
-        .filter(item => {
-          return item.id !== payload.id;
-        })
-        .concat({ ...payload, quantity: payload.quantity + 1 }); */
-
       return {
         ...state,
         cart:
-          hasKey === -1
-            ? state.cart.concat(payload)
-            : [
-                ...state.cart,
-                (state.cart[hasKey] = {
-                  ...payload,
-                  quantity: payload.quantity + 1
-                })
-              ]
+          hasKey === -1 ? state.cart.concat(payload) : [...state.cart, payload]
       };
 
     case CART.REMOVE_PRODUCT:
