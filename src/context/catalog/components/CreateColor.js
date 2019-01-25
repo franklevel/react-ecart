@@ -38,6 +38,7 @@ class CreateColor extends React.Component {
     const id = new Date().getMilliseconds();
     if (this.props.createColor({ id: id, name: name, value: value })) {
       alert("Se ha creado el color correctamente");
+      this.props.history.push("/catalog/color/list");
     } else {
       alert("Ha fallado la creación del color, intente de nuevo.");
     }
@@ -75,7 +76,7 @@ class CreateColor extends React.Component {
           </CardTitle>
           <Row>
             <Col>
-              <Link to="/catalog/color/list">
+              <Link to="/catalog/color/list" className="float-right">
                 <Button color="primary">Lista de colores</Button>
               </Link>
             </Col>

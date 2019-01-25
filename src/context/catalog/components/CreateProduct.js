@@ -7,9 +7,7 @@ import {
   Button,
   Label,
   Card,
-  CardBody,
-  Row,
-  Col
+  CardBody
 } from "reactstrap";
 import CatalogActions from "../actions";
 import CATALOG from "../constants";
@@ -73,7 +71,6 @@ class CreateProduct extends React.Component {
                 values,
                 touched,
                 errors,
-                dirty,
                 isSubmitting,
                 handleChange,
                 handleBlur,
@@ -81,7 +78,7 @@ class CreateProduct extends React.Component {
                 handleReset
               } = props;
               return (
-                <form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit}>
                   <FormGroup>
                     <Label>Nombre del producto</Label>
                     <Input
@@ -185,14 +182,17 @@ class CreateProduct extends React.Component {
                     />
                     <ErrorMessage name="stock" component="div" />
                   </FormGroup>
-                  <button
+                  <Button
                     type="submit"
                     className="btn btn-success"
                     disabled={isSubmitting}
                   >
                     Crear producto
-                  </button>
-                </form>
+                  </Button>{" "}
+                  <Button color="default" onClick={handleReset}>
+                    Limpiar
+                  </Button>
+                </Form>
               );
             }}
           </Formik>

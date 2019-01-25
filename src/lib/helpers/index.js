@@ -24,3 +24,9 @@ export const blob2Image = blobData => {
     return base64data;
   };
 };
+
+export const tokenize = (len = 36) => {
+  return Math.random()
+    .toString(len)
+    .substr(2);
+};

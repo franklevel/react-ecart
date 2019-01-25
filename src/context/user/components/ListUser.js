@@ -1,49 +1,36 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  Card,
-  CardTitle,
-  CardBody,
-  Button,
-  Table,
-  Row,
-  Col,
-  Badge
-} from "reactstrap";
+import { Card, CardTitle, CardBody, Table, Button, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
-import CatalogActions from "../actions";
-import CATALOG from "../constants";
+import USER from "../constants";
+import UserActions from "../actions";
 
-class ColorList extends React.Component {
+class ListUser extends React.Component {
   constructor(props) {
     super(props);
-    this.handleRemoveColor = this.handleRemoveColor.bind(this);
+    this.handleRemoveUser = this.handleRemoveUser.bind(this);
   }
 
-  handleRemoveColor(e) {
+  handleRemoveUser(e) {
     const id = parseInt(e.target.value);
-    const { colors } = this.props;
-    const color = colors.find(item => {
+    const user = this.props.users.find(item => {
       return item.id === id;
     });
-    if (this.props.removeColor(color)) {
-      alert("Se ha eliminado el color");
-    }
+    this.props.removeUser(user);
   }
 
   render() {
-    const { colors } = this.props;
-
+    const { users } = this.props;
     return (
       <Card>
         <CardBody>
           <CardTitle>
-            <h3>Lista de colores</h3>
+            <h3>Lista de usuarios</h3>
           </CardTitle>
           <Row>
             <Col>
-              <Link to="/catalog/color/create" className="float-right">
-                <Button color="primary">Crear color</Button>
+              <Link to="/user/create">
+                <Button color="primary">Crear usuario</Button>
               </Link>
             </Col>
           </Row>
@@ -54,32 +41,28 @@ class ColorList extends React.Component {
                 <thead>
                   <tr>
                     <th>Nombre</th>
-                    <th>Valor</th>
+                    <th>E-mail</th>
                     <th />
                   </tr>
                 </thead>
                 <tbody>
-                  {colors && colors.length > 0
-                    ? colors.map((c, k) => {
+                  {users && users.length > 0
+                    ? users.map((u, k) => {
                         return (
                           <tr key={k}>
-                            <td>{c.name}</td>
+                            <td>{u.name}</td>
+                            <td>{u.email}</td>
                             <td>
-                              <Badge style={{ backgroundColor: c.value }}>
-                                {c.value}
-                              </Badge>
-                            </td>
-                            <td>
-                              <Link to={`/catalog/color/edit/${c.id}`}>
-                                <Button color="info" size="sm" outline>
+                              <Link to={`/user/edit/${u.id}`}>
+                                <Button size="sm" color="info" outline>
                                   Editar
                                 </Button>
                               </Link>{" "}
                               <Button
-                                onClick={e => this.handleRemoveColor(e)}
-                                value={c.id}
                                 color="danger"
                                 size="sm"
+                                onClick={e => this.handleRemoveUser(e)}
+                                value={u.id}
                                 outline
                               >
                                 Eliminar
@@ -101,20 +84,19 @@ class ColorList extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    colors: state.catalogReducer.colors
+    users: state.userReducer.users
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    removeColor: payload =>
-      dispatch(CatalogActions(CATALOG.REMOVE_COLOR, payload))
+    removeUser: payload => dispatch(UserActions(USER.REMOVE_USER, payload))
   };
 };
 
-export const ColorListContainer = connect(
+export const ListUserContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ColorList);
+)(ListUser);
 
-export default ColorListContainer;
+export default ListUserContainer;

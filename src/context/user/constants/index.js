@@ -1,0 +1,9 @@
+export const USER = {
+  ADD_USER: "USER:ADD_USER",
+  EDIT_USER: "USER:EDIT_USER",
+  REMOVE_USER: "USER:REMOVE_USER",
+  LOGIN_USER: "USER:LOGIN",
+  LOGOUT_USER: "USER:LOGOUT"
+};
+
+export default USER;

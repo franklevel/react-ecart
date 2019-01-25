@@ -1,15 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  Table,
-  Button,
-  Input,
-  Col,
-  Row
-} from "reactstrap";
+import { Card, CardBody, CardTitle, Table, Input, Col } from "reactstrap";
 import CartActions from "../actions";
 import CART from "../constants";
 import { _displayPrice } from "../../../lib/helpers";
