@@ -10,7 +10,11 @@ const persistConfig = {
   key: "root",
   storage
 };
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers =
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+    trace: true,
+    traceLimit: 25
+  }) || compose;
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = createStore(

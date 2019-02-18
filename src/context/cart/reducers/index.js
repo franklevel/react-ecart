@@ -23,6 +23,11 @@ export function cartReducer(state = initialState, { type, payload }) {
         ...state,
         cart: payload
       };
+    case CART.EDIT_PRODUCT:
+      return {
+        ...state,
+        cart: payload
+      };
     default:
       return state;
   }

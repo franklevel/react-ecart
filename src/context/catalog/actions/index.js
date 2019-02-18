@@ -2,6 +2,10 @@ import CATALOG from "../constants";
 
 export function CatalogActions(action, payload) {
   switch (action) {
+    case CATALOG.ADD_PRODUCT_INIT:
+      return {
+        type: action
+      };
     case CATALOG.ADD_PRODUCT:
       return {
         type: action,

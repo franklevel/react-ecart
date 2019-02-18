@@ -59,8 +59,7 @@ class LoginUser extends React.Component {
                 isSubmitting,
                 handleChange,
                 handleBlur,
-                handleSubmit,
-                handleReset
+                handleSubmit
               } = props;
 
               return (

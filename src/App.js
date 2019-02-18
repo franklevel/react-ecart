@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import "./App.css";
 import Actions from "./context/catalog/actions";
 import Catalog from "./context/catalog/components/Catalog";
 import Cart from "./context/cart/components/Cart";

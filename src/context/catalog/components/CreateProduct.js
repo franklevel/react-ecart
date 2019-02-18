@@ -11,8 +11,9 @@ import {
 } from "reactstrap";
 import CatalogActions from "../actions";
 import CATALOG from "../constants";
-import { Formik, ErrorMessage } from "formik";
+import { Formik, ErrorMessage, Field } from "formik";
 import * as Yup from "yup";
+import addProduct from "../services";
 
 class CreateProduct extends React.Component {
   constructor(props) {
@@ -38,28 +39,28 @@ class CreateProduct extends React.Component {
               name: "",
               description: "",
               categories: "",
-              image: "",
+              colors: "",
+              //image: "",
               price: 0,
               stock: 0
             }}
             onSubmit={(values, { setSubmitting }) => {
-              if (
-                this.props.createProduct({
-                  id: new Date().getUTCMilliseconds(),
-                  name: values.name,
-                  description: values.description,
-                  categories: values.categories,
-                  image:
+              this.props.createProduct({
+                id: new Date().getUTCMilliseconds(),
+                name: values.name,
+                description: values.description,
+                categories: values.categories,
+                colors: values.colors,
+                /* image:
                     this.props.currentImage !== ""
                       ? this.props.currentImage
-                      : null,
-                  price: values.price,
-                  stock: values.stock
-                })
-              ) {
-                this.props.onFileSaved(null);
-                this.props.history.push("/catalog/product/list");
-              }
+                      : null, */
+                price: values.price,
+                stock: values.stock
+              });
+
+              /* this.props.onFileSaved(null);*/
+              //this.props.history.push("/catalog/product/list");
             }}
             validationSchema={Yup.object().shape({
               name: Yup.string().required("Ingrese el nombre del producto"),
@@ -112,8 +113,11 @@ class CreateProduct extends React.Component {
                     <ErrorMessage name="description" component="div" />
                   </FormGroup>
                   <FormGroup>
-                    <Label>Categoría(s)</Label>
-                    <Input type="select" name="categories">
+                    <Field
+                      component="select"
+                      name="categories"
+                      placeholder="Categorías"
+                    >
                       [<option value="0">Seleccione:</option>
                       {categories && categories.length > 0
                         ? categories.map((c, k) => {
@@ -125,12 +129,15 @@ class CreateProduct extends React.Component {
                           })
                         : null}
                       ];
-                    </Input>
+                    </Field>
                     <ErrorMessage name="categories" component="div" />
                   </FormGroup>
                   <FormGroup>
-                    <Label>Color</Label>
-                    <Input type="select" name="colors">
+                    <Field
+                      component="select"
+                      name="colors"
+                      placeholder="Colores"
+                    >
                       [<option value="0">Seleccione:</option>
                       {colors && colors.length > 0
                         ? colors.map((c, k) => {
@@ -142,7 +149,7 @@ class CreateProduct extends React.Component {
                           })
                         : null}
                       ];
-                    </Input>
+                    </Field>
                     <ErrorMessage name="colors" component="div" />
                   </FormGroup>
                   <FormGroup>
@@ -214,8 +221,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createProduct: payload =>
-      dispatch(CatalogActions(CATALOG.ADD_PRODUCT, payload)),
+    createProduct: payload => addProduct(payload),
     onFileLoaded: payload =>
       dispatch(CatalogActions(CATALOG.ON_FILE_LOADED, payload)),
     onFileSaved: payload =>

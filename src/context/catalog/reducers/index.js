@@ -4,11 +4,17 @@ const initialState = {
   catalog: [],
   categories: [],
   colors: [],
-  currentImage: null
+  currentImage: null,
+  onAddProductInit: false
 };
 
 function catalogReducer(state = initialState, { type, payload }) {
   switch (type) {
+    case CATALOG.ADD_PRODUCT_INIT:
+      return {
+        ...state,
+        onAddProductInit: true
+      };
     case CATALOG.ADD_PRODUCT:
       return {
         ...state,
@@ -22,6 +28,11 @@ function catalogReducer(state = initialState, { type, payload }) {
         catalog: state.catalog.filter(item => {
           return item.id !== payload.id;
         })
+      };
+    case CATALOG.GET_PRODUCTS:
+      return {
+        ...state,
+        catalog: []
       };
     case CATALOG.ADD_COLOR:
       return {

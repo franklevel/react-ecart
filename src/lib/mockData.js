@@ -5,6 +5,14 @@ export const data = {
       username: "franklevel",
       password: "12345678"
     }
+  ],
+  coupons: [
+    {
+      id: 1,
+      code: "HOLA2019",
+      rate: 0.25,
+      isActive: true
+    }
   ]
 };
 

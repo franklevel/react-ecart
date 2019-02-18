@@ -1,12 +1,57 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Card, CardBody, CardTitle, Table, Input, Col } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  Table,
+  Input,
+  Col,
+  InputGroup,
+  InputGroupAddon,
+  Button
+} from "reactstrap";
 import CartActions from "../actions";
 import CART from "../constants";
 import { _displayPrice } from "../../../lib/helpers";
 import APP from "../../../lib/constants";
 
 class CartSummary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      coupon: ""
+    };
+    this.handleCoupon = this.handleCoupon.bind(this);
+    this.handleCouponChange = this.handleCouponChange.bind(this);
+  }
+
+  handleCouponChange(e) {
+    const code = e.target.value;
+    this.setState({
+      coupon: code,
+      quantity: null
+    });
+  }
+
+  handleCoupon() {}
+
+  handleQuantityChange(e) {
+    const qty = parseInt(e.target.value);
+    const index = parseInt(e.target.dataset.index);
+    const name = e.target.name;
+
+    this.setState(
+      {
+        [name]: qty
+      },
+      () =>
+        console.log(
+          `Se ha cambiado el estado del input ${name} index: ${index} a ${qty} `
+        )
+    );
+  }
+
   render() {
     const { cart } = this.props;
     const subtotal =
@@ -41,7 +86,6 @@ class CartSummary extends React.Component {
                 ? cart.map((p, k) => {
                     return (
                       <tr key={k}>
-                        <td>{p.id}</td>
                         <td>
                           {p.name}
                           <br />
@@ -52,11 +96,14 @@ class CartSummary extends React.Component {
                             <Input
                               type="number"
                               min={1}
-                              value={p.quantity}
-                              name="quantity"
+                              value={this.state.quantity}
+                              onChange={e => this.handleQuantityChange(e)}
+                              name={`quantity-${k}`}
+                              data-index={k}
                             />
                           </Col>
                         </td>
+                        <td>{_displayPrice(p.price)}</td>
                         <td>
                           <span className="float-right">
                             {_displayPrice(p.quantity * p.price)}
@@ -69,7 +116,23 @@ class CartSummary extends React.Component {
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan={2} />
+                <td>
+                  <InputGroup>
+                    <Input
+                      type="text"
+                      name="coupon"
+                      placeholder="Cupón de descuento"
+                      onChange={this.handleCouponChange}
+                      value={this.state.coupon}
+                    />
+                    <InputGroupAddon addonType="append">
+                      <Button onClick={this.handleCoupon} color="primary">
+                        Aplicar
+                      </Button>
+                    </InputGroupAddon>
+                  </InputGroup>
+                </td>
+                <td />
                 <td>Sub-Total</td>
                 <td>
                   <span className="float-right">

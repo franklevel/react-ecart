@@ -5,6 +5,7 @@ import CatalogActions from "../actions";
 import CATALOG from "../constants";
 import { Link } from "react-router-dom";
 import { _displayPrice, truncate } from "../../../lib/helpers";
+import { getProducts } from "../services/index";
 
 class CatalogList extends React.Component {
   constructor(props) {
@@ -22,11 +23,12 @@ class CatalogList extends React.Component {
           })
         : null;
 
-    /*  const filtered = catalog.filter(p => {
-      return p.id !== id;
-    }); */
     alert(JSON.stringify(product));
     this.props.removeProduct(product);
+  }
+
+  componentDidMount() {
+    this.props.loadProducts();
   }
 
   render() {
@@ -99,7 +101,20 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createProduct: payload => dispatch(CatalogActions(CATALOG.ADD_PRODUCT)),
+    loadProducts: () => {
+      getProducts()
+        .then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+            if (typeof doc.data() === "object" && doc.data() !== null) {
+              dispatch(CatalogActions(CATALOG.ADD_PRODUCT, doc.data()));
+            }
+          });
+        })
+        .catch(function(error) {
+          console.log("Error getting documents: ", error);
+        });
+    },
+    createProduct: () => dispatch(CatalogActions(CATALOG.ADD_PRODUCT)),
     removeProduct: payload =>
       dispatch(CatalogActions(CATALOG.REMOVE_PRODUCT, payload))
   };

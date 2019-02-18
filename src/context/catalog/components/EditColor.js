@@ -59,8 +59,7 @@ class EditColor extends React.Component {
                 isSubmitting,
                 handleChange,
                 handleBlur,
-                handleSubmit,
-                handleReset
+                handleSubmit
               } = props;
               return (
                 <Form onSubmit={handleSubmit}>
